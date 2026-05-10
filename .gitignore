@@ -1,0 +1,25 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Local data and model artifacts
+data/raw/*
+data/processed/*
+models/
+checkpoints/
+runs/
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.pt
+*.pth
+*.safetensors
+
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
