@@ -14,7 +14,7 @@
 
 - Whisper 是一个自动语音识别模型，也可以做多语言转写、语音翻译和语言识别。
 - Whisper 的核心链路是：音频切片 -> log-Mel spectrogram -> encoder -> decoder -> 文本 token。
-- 完整 Whisper 的数据和算力规模很大，学习时应先推理、再微调、最后实现 mini 版本。
+- 完整 Whisper 的数据和算力规模很大，学习时不应只从调用模型开始，而应先理解大模型训练闭环，再迁移到音频模型。
 
 ### 问题和待确认
 
@@ -27,8 +27,28 @@
 
 1. 运行 `uv sync --extra dev` 安装依赖。
 2. 运行 `uv run python scripts/check_env.py` 检查环境。
-3. 准备一段 10 到 30 秒测试音频。
-4. 跑通第一个 Whisper 推理实验。
+3. 做第一个实验：字符级 tokenizer + 最小语言模型训练闭环。
+4. 记录 token、embedding、logits、loss、generation 的观察。
+
+## 2026-05-10：调整学习方向，大模型机制优先
+
+### 今天做了什么
+
+- 将路线从“先跑 Whisper 推理”调整为“先学大模型核心机制，再进入音频模型”。
+- 新增 `docs/llm-knowledge-map.md`，记录大模型知识地图。
+- 将第 1 阶段改为最小语言模型闭环。
+
+### 关键概念
+
+- Whisper 是学习案例，不是第一目标。
+- 大模型基础应先掌握：token、embedding、Transformer、loss、optimizer、generation。
+- 音频模型和文本模型的共同点是：都把输入变成序列，再用神经网络建模序列关系。
+
+### 下一步
+
+1. 创建第一个实验 `experiments/2026-05-10-tiny-lm/`。
+2. 用字符级 tokenizer 做一个最小训练数据集。
+3. 写一个能训练、评估、生成文本的 tiny LM。
 
 ## 日志模板
 

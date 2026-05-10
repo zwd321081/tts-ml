@@ -1,14 +1,14 @@
 # Audio LLM Lab
 
-这是一个从 Whisper 入手学习音频大模型的长期工程。目标不是一开始复刻完整 Whisper，而是按阶段把自动语音识别、大模型训练、数据处理、评估和推理部署逐步跑通。
+这是一个用音频模型作为载体学习大模型的长期工程。Whisper 是后续重点案例，但学习顺序不是先学会调用 Whisper，而是先掌握大模型核心机制，再把这些机制迁移到音频输入和语音识别任务。
 
 ## 学习目标
 
-1. 跑通现成 Whisper 模型，理解音频转文字的完整链路。
-2. 掌握 ASR 基础：采样率、waveform、STFT、log-Mel、tokenizer、WER/CER。
-3. 微调一个小型 Whisper 模型，熟悉数据集、训练循环、评估和 checkpoint。
-4. 从零实现一个 mini-Whisper，理解 encoder-decoder Transformer 的关键细节。
-5. 逐步扩展到长音频、时间戳、多语言、噪声鲁棒性和推理优化。
+1. 从零理解一个大模型训练闭环：数据、token、embedding、Transformer、loss、优化器、评估、推理。
+2. 先实现一个极小文本语言模型，掌握 next-token prediction 和 decoder-only Transformer。
+3. 再实现 encoder-decoder Transformer，理解 Whisper 这类模型为什么需要 encoder 和 decoder。
+4. 接入音频特征：waveform、STFT、log-Mel，把音频变成模型可处理的序列。
+5. 最后微调或复刻 mini-Whisper，学习真实大模型工程中的数据、训练、评估和推理问题。
 
 ## 工程结构
 
@@ -18,6 +18,7 @@ audio-llm-lab/
   pyproject.toml
   docs/
     roadmap.md          # 分阶段学习路线
+    llm-knowledge-map.md # 大模型知识地图
     learning-log.md     # 每次学习和实验记录
     resources.md        # 论文、课程、数据集、代码资源
   src/audio_llm_lab/
@@ -42,7 +43,7 @@ uv sync --extra dev
 uv run python scripts/check_env.py
 ```
 
-之后再进入第 1 阶段：安装 Whisper，拿一段音频跑通第一次转写。
+之后进入第 1 阶段：从零实现一个最小文本语言模型，先学清楚大模型训练的基本闭环。
 
 ## Python 环境
 
@@ -70,5 +71,5 @@ uv run pytest
 每个较完整的实验可以在 `experiments/` 下新建一个目录，例如：
 
 ```text
-experiments/2026-05-10-run-whisper-inference/
+experiments/2026-05-10-tiny-lm/
 ```
